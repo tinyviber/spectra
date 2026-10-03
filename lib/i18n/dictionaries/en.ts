@@ -256,7 +256,7 @@ const en = {
       },
       {
         heading: 'Contact',
-        body: 'Questions about this policy? Email hello@spectra.tools and we will respond within 30 days.',
+        body: 'Questions about this policy? Open an issue on GitHub (github.com/tinyviber/spectra) and we will respond within 30 days.',
       },
     ],
   },

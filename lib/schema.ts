@@ -11,7 +11,6 @@ export function organizationSchema(): Thing {
     name: siteConfig.name,
     url: siteConfig.url,
     logo: absoluteUrl('/icon.svg'),
-    email: siteConfig.email,
     sameAs: [siteConfig.github],
   }
 }

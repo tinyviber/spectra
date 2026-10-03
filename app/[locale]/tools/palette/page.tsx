@@ -8,10 +8,11 @@ import { getDictionary } from '@/lib/i18n/dictionaries'
 import { webApplicationSchema } from '@/lib/schema'
 import { buildMetadata } from '@/lib/seo'
 import { routes } from '@/lib/site'
+import { firstParam } from '@/lib/utils'
 
 type Props = {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ hex?: string; name?: string }>
+  searchParams: Promise<{ hex?: string | string[]; name?: string | string[] }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -27,7 +28,8 @@ export default async function PalettePage({ params, searchParams }: Props) {
   const { hex, name } = await searchParams
   const dict = getDictionary(locale)
   const t = dict.palette
-  const initialName = (name ?? 'brand').replace(/[^a-z0-9-]/gi, '').toLowerCase() || 'brand'
+  const initialHex = firstParam(hex)
+  const initialName = (firstParam(name) ?? 'brand').replace(/[^a-z0-9-]/gi, '').toLowerCase() || 'brand'
 
   return (
     <ToolPage
@@ -40,7 +42,7 @@ export default async function PalettePage({ params, searchParams }: Props) {
       swatch="bg-primary"
       schema={[webApplicationSchema({ locale, name: t.title, description: t.metaDescription, path: routes.palette.path })]}
     >
-      <PaletteTool initialHex={hex ? normalizeHex(hex) : null} initialName={initialName} />
+      <PaletteTool initialHex={initialHex ? normalizeHex(initialHex) : null} initialName={initialName} />
     </ToolPage>
   )
 }

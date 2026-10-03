@@ -37,6 +37,13 @@ export function PaletteTool({ initialHex, initialName }: { initialHex: string | 
   const scale = useMemo(() => (hex ? generateScale(hex) : null), [hex])
   const pickerValue = normalizeHex(input) ?? hex ?? '#2f5bea'
 
+  function scaleQuery(scaleHex: string | null, scaleName: string) {
+    const params = new URLSearchParams()
+    if (scaleHex) params.set('hex', scaleHex.slice(1))
+    if (scaleName && scaleName !== 'brand') params.set('name', scaleName)
+    return params.toString()
+  }
+
   function apply(value: string, source: 'form' | 'preset') {
     const normalized = normalizeHex(value)
     if (!normalized) {
@@ -46,10 +53,12 @@ export function PaletteTool({ initialHex, initialName }: { initialHex: string | 
     setError(null)
     setInput(normalized)
     setHex(normalized)
-    const params = new URLSearchParams({ hex: normalized.slice(1) })
-    if (name && name !== 'brand') params.set('name', name)
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
-    track('palette_generated', { hex: normalized, source })
+    router.replace(`${pathname}?${scaleQuery(normalized, name)}`, { scroll: false })
+    track('palette_generated', { source })
+  }
+
+  function share() {
+    copy(`${window.location.origin}${pathname}?${scaleQuery(hex, name)}`, 'share-link')
   }
 
   return (
@@ -130,7 +139,7 @@ export function PaletteTool({ initialHex, initialName }: { initialHex: string | 
         </fieldset>
 
         {hex && (
-          <Button type="button" variant="outline" onClick={() => copy(window.location.href, 'share-link')}>
+          <Button type="button" variant="outline" onClick={share}>
             <Link2 data-icon="inline-start" />
             {t.share}
           </Button>

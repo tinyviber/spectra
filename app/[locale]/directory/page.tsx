@@ -8,10 +8,11 @@ import { categories, resources, type Category } from '@/lib/resources'
 import { itemListSchema } from '@/lib/schema'
 import { buildMetadata } from '@/lib/seo'
 import { routes } from '@/lib/site'
+import { firstParam } from '@/lib/utils'
 
 type Props = {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ q?: string; category?: string }>
+  searchParams: Promise<{ q?: string | string[]; category?: string | string[] }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -27,7 +28,8 @@ export default async function DirectoryPage({ params, searchParams }: Props) {
   const { q, category } = await searchParams
   const dict = getDictionary(locale)
   const t = dict.directory
-  const initialCategory = categories.includes(category as Category) ? (category as Category) : null
+  const initialCategoryParam = firstParam(category)
+  const initialCategory = categories.includes(initialCategoryParam as Category) ? (initialCategoryParam as Category) : null
 
   return (
     <ToolPage
@@ -40,7 +42,7 @@ export default async function DirectoryPage({ params, searchParams }: Props) {
       swatch="bg-chart-3"
       schema={[itemListSchema(resources.map((r) => ({ name: r.name, url: r.url, description: r.description[locale] })))]}
     >
-      <DirectoryTool initialQuery={(q ?? '').slice(0, 100)} initialCategory={initialCategory} />
+      <DirectoryTool initialQuery={(firstParam(q) ?? '').slice(0, 100)} initialCategory={initialCategory} />
     </ToolPage>
   )
 }

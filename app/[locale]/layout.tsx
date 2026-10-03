@@ -39,7 +39,9 @@ export async function generateMetadata({ params }: Omit<LayoutProps, 'children'>
     creator: siteConfig.name,
     generator: 'v0.app',
     formatDetection: { telephone: false, email: false, address: false },
-    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
+    robots: siteConfig.indexable
+      ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } }
+      : { index: false, follow: false },
     icons: { icon: [{ url: '/icon.svg', type: 'image/svg+xml' }] },
     manifest: '/manifest.webmanifest',
   }
