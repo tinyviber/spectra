@@ -2,10 +2,12 @@
 
 import { track as vercelTrack } from '@vercel/analytics'
 
+// Events carry only actions and outcome counts — never user input
+// (typed colors, search queries), per the privacy policy.
 type EventMap = {
-  palette_generated: { hex: string; source: 'form' | 'preset' | 'url' }
+  palette_generated: { source: 'form' | 'preset' | 'url' }
   palette_extracted: { colors: number; source: 'upload' | 'sample' }
-  directory_search: { query: string; results: number }
+  directory_search: { results: number }
   directory_visit: { name: string; category: string }
   type_scale_changed: { ratio: number; base: number }
   copy: { what: string }

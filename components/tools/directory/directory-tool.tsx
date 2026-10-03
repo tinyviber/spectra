@@ -84,7 +84,7 @@ export function DirectoryTool({
   useEffect(() => {
     const q = deferredQuery.trim()
     if (q.length < 2) return
-    const id = setTimeout(() => track('directory_search', { query: q, results: results.length }), 800)
+    const id = setTimeout(() => track('directory_search', { results: results.length }), 800)
     return () => clearTimeout(id)
   }, [deferredQuery, results.length])
 

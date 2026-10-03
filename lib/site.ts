@@ -1,19 +1,30 @@
 function resolveSiteUrl() {
+  // Canonical origin. Set NEXT_PUBLIC_SITE_URL to the production domain;
+  // on Vercel the assigned production domain (then the preview URL) is used automatically.
   const explicit = process.env.NEXT_PUBLIC_SITE_URL
   if (explicit) return explicit.replace(/\/$/, '')
   const production = process.env.VERCEL_PROJECT_PRODUCTION_URL
   if (production) return `https://${production}`
   const preview = process.env.VERCEL_URL
   if (preview) return `https://${preview}`
+  if (process.env.NODE_ENV === 'production') {
+    console.warn('[site] NEXT_PUBLIC_SITE_URL is not configured — canonical URLs and the sitemap will point at localhost.')
+  }
   return 'http://localhost:3000'
+}
+
+function resolveIndexable() {
+  // Vercel builds serve both production and previews; only index production.
+  if (process.env.VERCEL_ENV) return process.env.VERCEL_ENV === 'production'
+  // Anywhere else, index only when a real public origin is configured (not the localhost fallback).
+  return !resolveSiteUrl().startsWith('http://localhost')
 }
 
 export const siteConfig = {
   name: 'Spectra',
   url: resolveSiteUrl(),
-  email: 'hello@spectra.tools',
-  twitter: '@spectratools',
-  github: 'https://github.com/vercel',
+  indexable: resolveIndexable(),
+  github: 'https://github.com/tinyviber/spectra',
   lastUpdated: '2026-10-01',
 } as const
 

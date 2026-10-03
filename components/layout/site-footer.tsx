@@ -45,8 +45,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         <div className="flex flex-col gap-4">
           <Logo className="text-lg" />
           <p className="max-w-xs text-sm leading-relaxed text-pretty text-muted-foreground">{dict.footer.tagline}</p>
-          <a href={`mailto:${siteConfig.email}`} className="w-fit font-mono text-sm text-foreground underline-offset-4 hover:underline">
-            {siteConfig.email}
+          <a
+            href={siteConfig.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-fit font-mono text-sm text-foreground underline-offset-4 hover:underline"
+          >
+            github.com/tinyviber/spectra
           </a>
         </div>
         {columns.map((col) => (

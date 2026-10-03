@@ -47,7 +47,6 @@ export function buildMetadata({ locale, route, title, description, kind, absolut
       card: 'summary_large_image',
       title,
       description,
-      creator: siteConfig.twitter,
       images: [image],
     },
   }

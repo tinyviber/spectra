@@ -252,7 +252,7 @@ const zh: Dictionary = {
       },
       {
         heading: '联系方式',
-        body: '对本政策有疑问？请发送邮件至 hello@spectra.tools，我们会在 30 天内回复。',
+        body: '对本政策有疑问？请在 GitHub（github.com/tinyviber/spectra）提交 issue，我们会在 30 天内回复。',
       },
     ],
   },

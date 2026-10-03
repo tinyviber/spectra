@@ -1,4 +1,4 @@
-import { Mail } from 'lucide-react'
+import { Bug } from 'lucide-react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ToolPage } from '@/components/shared/tool-page'
@@ -71,9 +71,14 @@ export default async function AboutPage({ params }: Props) {
             </h2>
             <p className="leading-relaxed opacity-75">{t.contact}</p>
           </div>
-          <a href={`mailto:${siteConfig.email}`} className={buttonVariants({ variant: 'secondary', size: 'lg' })}>
-            <Mail data-icon="inline-start" />
-            {siteConfig.email}
+          <a
+            href={`${siteConfig.github}/issues`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({ variant: 'secondary', size: 'lg' })}
+          >
+            <Bug data-icon="inline-start" />
+            GitHub
           </a>
         </section>
       </div>

@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils'
 
 const MAX_BYTES = 10 * 1024 * 1024
 const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp', 'image/gif']
-const SAMPLE = '/images/sample-palette.jpg'
+const SAMPLE = '/images/sample-palette.png'
 
 type Status = 'idle' | 'loading' | 'ready' | 'error'
 
